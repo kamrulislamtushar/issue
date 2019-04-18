@@ -17,11 +17,31 @@ class IssueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $issues = Issue::with('issueImages')->get();
-        return response()->json($issues);
     }
+
+    public function issues(Request $request)
+    {
+        $orderBy = $request->get('order_by');
+        $sort_order = $request->get('sort_order');
+        if($orderBy)
+        {
+            $issues = Issue::with('issueImages')
+                ->withCount('votes')
+                ->orderBy($orderBy,  $sort_order)
+                ->paginate(10);
+            return response()->json($issues);
+        }
+        $issues = Issue::with('issueImages')
+            ->withCount('votes')
+            ->orderBy('created_at',  'desc')
+            ->paginate(10);
+        return response()->json($issues);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

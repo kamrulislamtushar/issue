@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\User;
+use App\Vote;
 use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
@@ -20,6 +21,10 @@ class Issue extends Model
     public function issueImages()
     {
       return  $this->hasMany(IssueImage::class);
+    }
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
     }
 
 }

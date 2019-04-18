@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
             'phone' => 'required|unique:users',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:6',
         ];
     }
 }

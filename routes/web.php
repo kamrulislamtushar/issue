@@ -23,11 +23,15 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api){
     $api->post('signup', 'App\Http\Controllers\AuthController@signup');
+    $api->post('all-issues' ,'App\Http\Controllers\IssueController@issues')->name('all-issues');
     $api->post('login' ,'App\Http\Controllers\AuthController@login');
+    $api->resource('issue-votes' , 'App\Http\Controllers\VoteController');
     $api->group(['middleware' => 'auth:api'], function ($api) {
         $api->get('logout', 'App\Http\Controllers\AuthController@logout');
         $api->resource('users','App\Http\Controllers\UserController');
-        $api->resource('issues' , 'App\Http\Controllers\IssueController');
+        $api->resource('issues' , 'App\Http\Controllers\IssueController', ['except' => ['index']]);
+
+
     });
 
 });
